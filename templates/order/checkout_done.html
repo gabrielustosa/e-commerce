@@ -9,6 +9,6 @@
         <h2 class="pt-5">
             Pedido realizado com sucesso!
         </h2>
-        <p>O numero do seu pedido é {{ order.id }}</p>
+        <p>O numero do seu pedido é {{ request.session.order_id }}</p>
     </div>
 {% endblock %}

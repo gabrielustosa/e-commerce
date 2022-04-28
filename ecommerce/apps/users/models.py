@@ -58,3 +58,6 @@ class Address(models.Model):
     city = models.CharField('Cidade', max_length=50)
     state = models.CharField('Estado', max_length=50)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
