@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load shop_filter %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class=" col-3">
+                <div class="mx-4 mt-5 ">
+                    <h3>Categorias</h3>
+                    <div class="card text-white bg-primary" style="width: 18rem;">
+                        <a href="{% url 'shop:home' %}" id="sidebar" class="text-decoration-none">
+                            <li class="list-group-item">
+                                Todas
+                            </li>
+                        </a>
+                        {% for category in categories %}
+                            <a href="{% url 'shop:category_list' category.slug %}" id="sidebar" class="text-decoration-none">
+                                <li class="list-group-item "> {{ category.name }}</li>
+                            </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-9">
+                <div class="row">
+                    <h3 class="pt-3">Produtos</h3>
+                    {% for product in products %}
+                        <div class="col-4 py-4">
+                            <div class="card" style="width: 18rem;">
+                                <img src="{{ product.image.url }}" class="card-img-top" alt="Produto">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between">
+                                        <h5 class="card-title">{{ product.title }} </h5>
+                                        <p>4/5
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                 fill="currentColor" class="bi bi-star-fill text-warning"
+                                                 viewBox="0 0 16 16">
+                                                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"></path>
+                                            </svg>
+                                        </p>
+                                    </div>
+                                    <p class="card-text">{{ product.short_description }}</p>
+                                    <div class="d-flex">
+                                        <a href="{% url 'shop:product_detail' product.id %}" class="btn btn-primary me-2">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                 fill="currentColor"
+                                                 class="bi bi-cart-fill" viewBox="0 0 16 16">
+                                                <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"></path>
+                                            </svg>
+                                        </a>
+                                        <a href="#" class="btn btn-danger">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                 fill="currentColor"
+                                                 class="bi bi-heart-fill" viewBox="0 0 16 16">
+                                                <path fill-rule="evenodd"
+                                                      d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"></path>
+                                            </svg>
+                                        </a>
+                                        <p class="card-price m-auto">{{ product.price|format_price }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <ul class="pagination">
+                            {% if paginator.num_pages > 1 %}
+                                {% if page_obj.has_previous %}
+                                    <li class="page-item"><a class="page-link"
+                                                             href="?page={{ page_obj.previous_page_number }}">&laquo;</a>
+                                    </li>
+                                {% else %}
+                                    <li class="page-item disabled"><a class="page-link" href="#">&laquo;</a></li>
+                                {% endif %}
+
+                                {% for num in paginator.page_range %}
+
+                                    {% if page_obj.number == num %}
+                                        <li class="page-item active"><a class="page-link" href="#">{{ num }}</a></li>
+                                    {% else %}
+                                        <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                                        </li>
+                                    {% endif %}
+
+                                {% endfor %}
+
+                                {% if page_obj.has_next %}
+
+                                    <li class="page-item"><a class="page-link"
+                                                             href="?page={{ page_obj.next_page_number }}">&raquo;</a>
+                                    </li>
+                                {% else %}
+                                    <li class="page-item disabled"><a class="page-link" href="#">&raquo;</a></li>
+                                {% endif %}
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

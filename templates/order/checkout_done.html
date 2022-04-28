@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Pedido concluído
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h2 class="pt-5">
+            Pedido realizado com sucesso!
+        </h2>
+        <p>O numero do seu pedido é {{ order.id }}</p>
+    </div>
+{% endblock %}
