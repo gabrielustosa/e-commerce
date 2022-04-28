@@ -22,10 +22,12 @@
                                 <p class="card-text">{{ address.number }}, {{ address.complement }}</p>
                             </div>
                         </div>
-                        <form method="POST" action="{% url 'order:checkout' address.id %}">
-                            {% csrf_token %}
-                            <button type="submit" class="btn btn-primary mt-3 me-3">Adicionar</button>
-                        </form>
+                        <div class="mt-5 ms-3" >
+                            <form method="POST" action="{% url 'order:checkout' address.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-primary">Adicionar</button>
+                            </form>
+                        </div>
                     </div>
                 {% empty %}
                     <div>
