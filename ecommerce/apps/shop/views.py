@@ -7,12 +7,12 @@ from ecommerce.apps.cart.forms import CartAddProductForm
 class AllProductsView(ListView):
     template_name = 'shop/all_products.html'
     model = Product
-    paginate_by = 3
+    paginate_by = 6
     context_object_name = 'products'
 
 
 class ProductsCategoryView(AllProductsView):
-    paginate_by = 1
+    paginate_by = 6
 
     def get_queryset(self):
         queryset = super().get_queryset()

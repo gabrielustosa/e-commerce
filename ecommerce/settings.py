@@ -38,21 +38,25 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # local apps
-    'ecommerce.apps.cart',
-    'ecommerce.apps.orders',
-    'ecommerce.apps.shop',
-    'ecommerce.apps.users',
+
     # 3rd apps
     'bootstrap5',
     'widget_tweaks',
     'crispy_forms',
     'crispy_bootstrap5',
+    'debug_toolbar',
+
+    # local apps
+    'ecommerce.apps.cart',
+    'ecommerce.apps.orders',
+    'ecommerce.apps.shop',
+    'ecommerce.apps.users',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -144,3 +148,7 @@ AUTH_USER_MODEL = 'users.User'
 
 LOGIN_REDIRECT_URL = 'shop:home'
 LOGOUT_REDIRECT_URL = 'shop:home'
+
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
