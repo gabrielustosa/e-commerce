@@ -5,6 +5,7 @@ from django.views.decorators.http import require_POST
 from ecommerce.apps.shop.models import Product
 from .cart import Cart
 from .forms import CartAddProductForm
+from ..wish.models import Wish
 
 
 @require_POST
@@ -17,9 +18,17 @@ def cart_add(request, product_id):
     form = CartAddProductForm(request.POST)
     if form.is_valid():
         cd = form.cleaned_data
-        cart.add(product=product,
-                 quantity=cd['quantity'],
-                 override_quantity=cd['override'])
+        cart.add(
+            product=product,
+            quantity=cd['quantity'],
+            override_quantity=cd['override']
+        )
+    else:
+        cart.add(
+            product=product,
+            quantity=1,
+        )
+        Wish.objects.get(user=request.user, product=product).delete()
     return redirect('cart:cart_detail')
 
 

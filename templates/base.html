@@ -47,7 +47,6 @@
                                 <li><a class="dropdown-item"
                                        href="{% url 'shop:category_list' category.slug %}">{{ category }}</a></li>
                             {% endfor %}
-
                         </ul>
                     </li>
                     <li class="nav-item">
@@ -67,6 +66,11 @@
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item" href="{% url 'users:profile' %}">Minha conta</a></li>
+                                <li>
+                                    <button type="button" class="dropdown-item" data-bs-toggle="modal"
+                                            data-bs-target="#wishModal">Lista de desejos
+                                    </button>
+                                </li>
                                 <li><a class="dropdown-item" href="{% url 'logout' %}">Deslogar</a></li>
                             </ul>
                         {% else %}
@@ -84,6 +88,46 @@
             </div>
         </div>
     </nav>
+</section>
+<section>
+    <div class="modal fade" id="wishModal" tabindex="-1" aria-labelledby="wishModal" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="wishModal">Lista de desejos</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    {% for wish in wish_list %}
+                        {% with product=wish.product %}
+                            <div class="d-flex align-items-center">
+                                <img src="{{ product.image.url }}" alt="Imagem do Produto"
+                                     class="img-fluid img-thumbnail" style="height: 25%; width: 25%;">
+                                <div class="d-block ms-2">
+                                    <p>{{ product.title }}</p>
+                                    <p>Preço: {{ product.price }}</p>
+                                </div>
+                                <div class="d-flex flex-column ms-auto">
+                                    <form method="POST" action="{% url 'cart:cart_add' product.id %}">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-primary mb-2"><i
+                                                class="bi bi-cart-fill"></i></button>
+                                    </form>
+                                    <form method="POST" action="{% url 'wish:delete' wish.id %}">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-danger mb-2"><i
+                                                class="bi bi-trash-fill"></i></button>
+                                    </form>
+                                </div>
+                            </div>
+                        {% endwith %}
+                    {% empty %}
+                        <h5 class="text-center">Sua lista de desejos está vazia!</h5>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 {% bootstrap_messages %}
 <div id="content">{% block content %} {% endblock %}</div>

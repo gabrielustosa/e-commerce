@@ -25,6 +25,7 @@ urlpatterns = [
     path('order/', include('ecommerce.apps.orders.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
     path('accounts/', include('ecommerce.apps.users.urls')),
+    path('wish/', include('ecommerce.apps.wish.urls')),
     path('', include('ecommerce.apps.shop.urls')),
 ]
 

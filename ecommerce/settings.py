@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'ecommerce.apps.orders',
     'ecommerce.apps.shop',
     'ecommerce.apps.users',
+    'ecommerce.apps.wish',
 ]
 
 MIDDLEWARE = [
@@ -79,7 +80,8 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'ecommerce.apps.cart.context_processors.cart',
-                'ecommerce.apps.shop.context_processors.categories'
+                'ecommerce.apps.shop.context_processors.categories',
+                'ecommerce.apps.wish.context_processors.wish_list',
             ],
         },
     },
