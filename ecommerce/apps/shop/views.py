@@ -2,6 +2,8 @@ from django.views.generic import ListView, TemplateView
 
 from .models import Product
 from ecommerce.apps.cart.forms import CartAddProductForm
+from ..orders.models import OrderItem
+from ..rating.models import Rating
 
 
 class AllProductsView(ListView):
@@ -16,7 +18,7 @@ class ProductsCategoryView(AllProductsView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        category_slug = self.kwargs.get('category_slug', None)
+        category_slug = self.kwargs.get('category_slug')
         queryset = queryset.filter(category__slug=category_slug)
         return queryset
 
@@ -26,8 +28,10 @@ class ProductDetailView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        product_id = self.kwargs.get('product_id', None)
-        context['product'] = Product.objects.get(pk=product_id)
+        product_id = self.kwargs.get('product_id')
+        product = Product.objects.get(pk=product_id)
+        context['product'] = product
+        context['ratings'] = Rating.objects.filter(order__product=product).select_related('user')
         context['form'] = CartAddProductForm()
         return context
 
@@ -46,3 +50,13 @@ class ProductSearchView(AllProductsView):
 
         self.request.session.save()
         return queryset
+
+
+class OrderItemView(TemplateView):
+    template_name = 'shop/order_item_view.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(OrderItemView, self).get_context_data()
+        context['items'] = OrderItem.objects.filter(order__user=self.request.user).prefetch_related(
+            'ratings').select_related('product')
+        return context

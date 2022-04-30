@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'ecommerce.apps.shop',
     'ecommerce.apps.users',
     'ecommerce.apps.wish',
+    'ecommerce.apps.rating',
 ]
 
 MIDDLEWARE = [

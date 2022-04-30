@@ -12,4 +12,4 @@ def format_price(value):
 
 @register.filter()
 def range_list(value):
-    return [v for v in range(value + 1)]
+    return [v for v in range(value)]

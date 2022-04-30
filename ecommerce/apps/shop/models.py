@@ -1,5 +1,7 @@
-from django.conf import settings
 from django.db import models
+from django.db.models import Avg
+
+from ecommerce.apps.users.models import User
 
 
 class ProductManager(models.Manager):
@@ -17,14 +19,13 @@ class Category(models.Model):
 
 class Product(models.Model):
     category = models.ForeignKey(Category, related_name='product', on_delete=models.CASCADE)
-    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='product_creator')
     title = models.CharField(max_length=255)
-    author = models.CharField(max_length=255, default='admin')
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
     description = models.TextField(blank=True)
     image = models.ImageField(upload_to='images/')
     slug = models.SlugField(max_length=255)
-    price = models.DecimalField(max_digits=4, decimal_places=2)
-    in_stock = models.BooleanField(default=True)
+    price = models.DecimalField(max_digits=12, decimal_places=2)
+    stock = models.PositiveIntegerField()
     is_active = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
@@ -33,6 +34,17 @@ class Product(models.Model):
 
     class Meta:
         ordering = ('created',)
+
+    def in_stock(self):
+        return self.stock != 0
+
+    def get_rating_avg(self):
+        from ecommerce.apps.rating.models import Rating
+        result = Rating.objects.filter(order__product=self).aggregate(Avg('rating'))
+        result = result['rating__avg']
+        if result:
+            return round(result)
+        return 0
 
     def __str__(self):
         return self.title
