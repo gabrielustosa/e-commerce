@@ -34,8 +34,6 @@ class PaymentCreateView(CreateView):
         redirect_url = "payment:failure"
         status = form.instance.mercado_pago_status
 
-        print(status)
-
         if status == "approved":
             redirect_url = "payment:success"
         if status == "in_process":
