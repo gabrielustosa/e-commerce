@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'ecommerce.apps.users',
     'ecommerce.apps.wish',
     'ecommerce.apps.rating',
+    'ecommerce.apps.payment'
 ]
 
 MIDDLEWARE = [
@@ -155,3 +156,6 @@ LOGOUT_REDIRECT_URL = 'shop:home'
 INTERNAL_IPS = [
     "127.0.0.1",
 ]
+
+MERCADO_PAGO_PUBLIC_KEY = os.environ.get('MERCADO_PAGO_PUBLIC_KEY')
+MERCADO_PAGO_ACCESS_TOKEN = os.environ.get('MERCADO_PAGO_ACCESS_TOKEN')

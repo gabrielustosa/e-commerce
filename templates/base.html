@@ -71,7 +71,16 @@
                                             data-bs-target="#wishModal">Lista de desejos
                                     </button>
                                 </li>
-                                <li><a class="dropdown-item" href="{% url 'logout' %}">Deslogar</a></li>
+                                <li>
+                                    <a class="dropdown-item" href="{% url 'shop:items' %}">
+                                        Meus pedidos
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{% url 'logout' %}">
+                                        Deslogar
+                                    </a>
+                                </li>
                             </ul>
                         {% else %}
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
@@ -131,6 +140,8 @@
 </section>
 {% bootstrap_messages %}
 <div id="content">{% block content %} {% endblock %}</div>
+
+{% block javascript %} {% endblock %}
 {% bootstrap_javascript %}
 </body>
 </html>

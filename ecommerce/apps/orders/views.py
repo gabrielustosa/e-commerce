@@ -33,19 +33,21 @@ def order_process_view(request, address_id):
                 price=item['price'],
                 quantity=item['quantity'],
             )
-            Wish.objects.get(Q(user=request.user) & Q(product=item['product'])).delete()
+            wish = Wish.objects.filter(Q(user=request.user) & Q(product=item['product'])).first()
+            if wish:
+                wish.delete()
         cart.clear()
         request.session['order_id'] = order.id
-    return redirect('order:checkout_done')
+        return redirect('payment:process')
+    return redirect('shop:home')
 
-
-class OrderCheckoutDoneView(CreateView):
-    template_name = 'order/checkout_done.html'
-    model = Rating
-    fields = ('rating', 'comment')
-    success_url = reverse_lazy('shop:home')
-
-    def form_valid(self, form):
-        form.instance.order = Order.objects.get(pk=self.request.session['order_id'])
-        form.instance.user = self.request.user
-        return super().form_valid(form)
+# class OrderCheckoutDoneView(CreateView):
+#     template_name = 'order/checkout_done.html'
+#     model = Rating
+#     fields = ('rating', 'comment')
+#     success_url = reverse_lazy('shop:home')
+#
+#     def form_valid(self, form):
+#         form.instance.order = Order.objects.get(pk=self.request.session['order_id'])
+#         form.instance.user = self.request.user
+#         return super().form_valid(form)

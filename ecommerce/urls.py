@@ -27,6 +27,7 @@ urlpatterns = [
     path('accounts/', include('ecommerce.apps.users.urls')),
     path('wish/', include('ecommerce.apps.wish.urls')),
     path('rating/', include('ecommerce.apps.rating.urls')),
+    path('payment/', include('ecommerce.apps.payment.urls')),
     path('', include('ecommerce.apps.shop.urls')),
 ]
 

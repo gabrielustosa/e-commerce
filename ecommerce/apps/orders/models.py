@@ -3,21 +3,11 @@ from django.db import models
 from ecommerce.apps.shop.models import Product
 from ecommerce.apps.users.models import Address, User
 
-PAID_STATUS = [
-    ('A', 'APROVADO'),
-    ('R', 'RECUSADO'),
-    ('P', 'PENDENTE'),
-]
-
 
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     address = models.ForeignKey(Address, on_delete=models.CASCADE)
-    paid_status = models.CharField(
-        max_length=1,
-        choices=PAID_STATUS,
-        default='P'
-    )
+    paid = models.BooleanField(default=False)
     created = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -32,7 +22,7 @@ class Order(models.Model):
 
     def get_description(self):
         return ', '.join(
-            [f'{item.quantity}x {item.product.name}' for item in self.items.all()]
+            [f'{item.quantity}x {item.product.title}' for item in self.items.all()]
         )
 
 
