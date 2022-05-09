@@ -33,7 +33,7 @@ class UserManager(BaseUserManager):
 
 class User(AbstractUser):
     email = models.EmailField('E-mail', unique=True)
-    cpf = models.CharField(max_length=14)
+    cpf = models.CharField('CPF', max_length=14)
     name = models.CharField('Nome', max_length=150)
     phone_number = models.CharField('Número de telefone', max_length=15)
     is_staff = models.BooleanField('Equipe', default=False)

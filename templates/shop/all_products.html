@@ -13,13 +13,13 @@
                 <div class="mx-4 mt-5 ">
                     <h3>Categorias</h3>
                     <div class="card text-white bg-primary" style="width: 18rem;">
-                        <a href="{% url 'shop:home' %}" id="sidebar" class="text-decoration-none">
+                        <a href="{% url 'shop:home' %}" class="text-decoration-none">
                             <li class="list-group-item">
                                 Todas
                             </li>
                         </a>
                         {% for category in categories %}
-                            <a href="{% url 'shop:category_list' category.slug %}" id="sidebar"
+                            <a href="{% url 'shop:category_list' category.slug %}"
                                class="text-decoration-none">
                                 <li class="list-group-item "> {{ category.name }}</li>
                             </a>
@@ -32,31 +32,33 @@
                     <h3 class="pt-3">Produtos</h3>
                     {% for product in products %}
                         <div class="col-4 py-4">
-                            <div class="card" style="width: 18rem;">
-                                <img src="{{ product.image.url }}" class="card-img-top" alt="Produto">
-                                <div class="card-body">
-                                    <div class="d-flex justify-content-between">
-                                        <h5 class="card-title">{{ product.title }} </h5>
-                                        <p>{{ product.get_rating_avg }}/5
-                                            <i class="bi bi-star-fill text-warning"></i>
-                                        </p>
-                                    </div>
-                                    <p class="card-text">{{ product.short_description }}</p>
-                                    <div class="d-flex">
-                                        <a href="{% url 'shop:product_detail' product.id %}"
-                                           class="btn btn-primary me-2">
-                                            <i class="bi bi-cart-fill"></i>
-                                        </a>
-                                        <form method="POST" action="{% url 'wish:add' product.id %}">
-                                            {% csrf_token %}
-                                            <button type="submit" class="btn btn-danger">
-                                                <i class="bi bi-heart-fill"></i>
-                                            </button>
-                                        </form>
-                                        <p class="card-price m-auto">{{ product.price|format_price }}</p>
+                            <a href="{% url 'shop:product_detail' product.id %}" class="text-dark text-decoration-none">
+                                <div class="card" style="width: 18rem;">
+                                    <img src="{{ product.image.url }}" class="card-img-top" alt="Produto">
+                                    <div class="card-body">
+                                        <div class="d-flex justify-content-between">
+                                            <h5 class="card-title">{{ product.title }} </h5>
+                                            <p>{{ product.get_rating_avg }}/5
+                                                <i class="bi bi-star-fill text-warning"></i>
+                                            </p>
+                                        </div>
+                                        <p class="card-text">{{ product.short_description }}</p>
+                                        <div class="d-flex">
+                                            <a href="{% url 'shop:product_detail' product.id %}"
+                                               class="btn btn-primary me-2">
+                                                <i class="bi bi-cart-fill"></i>
+                                            </a>
+                                            <form method="POST" action="{% url 'wish:add' product.id %}">
+                                                {% csrf_token %}
+                                                <button type="submit" class="btn btn-danger">
+                                                    <i class="bi bi-heart-fill"></i>
+                                                </button>
+                                            </form>
+                                            <p class="card-price m-auto">{{ product.price|format_price }}</p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            </a>
                         </div>
                     {% endfor %}
                 </div>
