@@ -57,6 +57,7 @@ class OrderItemView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(OrderItemView, self).get_context_data()
-        context['items'] = OrderItem.objects.filter(order__user=self.request.user).prefetch_related(
-            'ratings').select_related('product')
+        context['items'] = OrderItem.objects.filter(order__user=self.request.user) \
+            .prefetch_related('ratings') \
+            .select_related('product')
         return context

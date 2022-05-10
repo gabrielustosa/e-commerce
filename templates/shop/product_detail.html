@@ -17,7 +17,7 @@
                 <div class="d-flex justify-between">
                     <h2 class="card-price pb-5 pe-5">{{ product.price|format_price }}</h2>
                     <div class=" pb-5">
-                        <form class="d-flex" action="{% url 'cart:cart_add' product.id %}" method="post">
+                        <form class="d-flex" action="{% url 'add' product.id %}" method="post">
                             {% csrf_token %}
                             <p class="h3 pe-3">Quantidade</p>
                             <div class="h3 pe-3">

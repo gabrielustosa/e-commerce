@@ -28,7 +28,7 @@
                                 </a>
                             </td>
                             <td>
-                                <form action="{% url 'cart:cart_add' product.id %}" method="post"
+                                <form action="{% url 'add' product.id %}" method="post"
                                       class="d-flex">
                                     {% csrf_token %}
                                     <div class="h3 pe-3">
@@ -41,7 +41,7 @@
                                 </form>
                             </td>
                             <td>
-                                <form action="{% url 'cart:cart_remove' product.id %}" method="post">
+                                <form action="{% url 'remove' product.id %}" method="post">
                                     {% csrf_token %}
                                     <input class="btn btn-danger" type="submit" value="Excluir">
                                 </form>
